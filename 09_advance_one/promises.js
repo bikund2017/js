@@ -1,3 +1,6 @@
+const { error } = require("console");
+const { resolve } = require("path");
+
 const promiseOne = new Promise(function (resolve, reject) {
   // do an async call
   // DB calls, cryptography, network
@@ -57,5 +60,52 @@ promiseFour
   })
   .finally(() => {
     console.log("The promise is either resolve or rejected");
-    
+  });
+
+const promiseFive = new Promise(function (resolve, reject) {
+  setTimeout(function () {
+    let error = true;
+
+    if (!error) {
+      resolve({
+        username: "javaScript",
+        password: 1234,
+      });
+    } else {
+      reject(`Error: js went wrong`);
+    }
+  }, 1000);
+});
+
+async function consumePromiseFive() {
+  try {
+    const respone = await promiseFive;
+    console.log(respone);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+consumePromiseFive();
+
+// async function getAllusers() {
+//   try {
+//     const respone = await fetch('https://api.github.com/users/hiteshchoudhary');
+
+//     const data = await respone.json();
+//     console.log(data);
+//   } catch (error) {
+//     console.log("E: ", error);
+//   }
+// }
+
+// getAllusers()
+
+fetch("https://api.github.com/users/hiteshchoudhary")
+  .then((respone) => {
+    return respone.json();
   })
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((error) => console.log(error));
