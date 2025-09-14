@@ -74,3 +74,4 @@ const f = log((a, b) => a + b);
 f(1, 2); // Logs: Input [1, 2] Output 3
 
 
+it 
