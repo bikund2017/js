@@ -151,12 +151,201 @@
 // }
 // console.log( `The correct number, ${ randomNum }, was found.` );
 
-
-
 // do…while
 
-let iterationCount = 1;
-do {
-    console.log(`Loop ${iterationCount}.`);
-    iterationCount++;
-} while (iterationCount < 3);
+// let iterationCount = 1;
+// do {
+//     console.log(`Loop ${iterationCount}.`);
+//     iterationCount++;
+// } while (iterationCount < 3);
+
+// let randomNum;
+// do {
+//   randomNum = (() => Math.floor(Math.random() * 10))();
+//   console.log(`Is the number ${randomNum}?`);
+// } while (randomNum !== 3);
+// {
+//   console.log(`Yes ${randomNum} was the correct number.`);
+// }
+
+// for
+
+// for (let i = 0; i < 3; i++) {
+//     console.log("This loop will run three times");
+// }
+
+// let myArray = [true, false, true];
+// for(let i = 0; i < myArray.length; i++) {
+//     console.log(myArray[i]);
+// }
+
+// iterable data structures
+// for […] of […]
+
+// const myIterable = [true, false, true];
+// for (const myElement of myIterable) {
+//   console.log(myElement);
+// }
+
+// for…in…
+
+// const myObject = { myProperty: true, mySecondProperty: false };
+// for (const myKey in myObject) {
+//   console.log(myKey);
+// }
+
+// for (const myKey in myObject) {
+//   const myValue = myObject[myKey];
+//   console.log(`${myKey}: ${myValue}`);
+// }
+
+// const myPrototype = {"protoProperty": true};
+// const myObject = Object.create(myPrototype, {
+//     myPrototype: {
+//         value: true,
+//         enumerable: true
+//     }
+// });
+// for (const myKey in myObject) {
+//     const myValue = myObject[myKey];
+//     console.log(`${myKey} : ${myValue} `)
+// }
+
+// const myPrototype = { protoPerty: true };
+// const myObject = Object.create(myPrototype, {
+//   myPrototype: {
+//     value: true,
+//     enumerable: true,
+//   },
+// });
+// for (const myKey in myObject) {
+//   const myValue = myObject[myKey];
+//   if (Object.hasOwn(myObject, myKey)) {
+//     console.log(`${myKey} : ${myValue}`);
+//   }
+// }
+
+// const myObject = { myProperty: true, mySecondProperty: false };
+// console.log(Object.keys(myObject));
+// console.log(Object.values(myObject))
+// console.log(Object.entries(myObject))
+
+// const myPrototype = {"protoProperty": "Non-enumerable property value."};
+// const myObject = Object.create(myPrototype, {
+//     myProperty: {
+//         value: "Enumerable property value.",
+//         enumerable: true
+//     }
+// });
+
+// for (const propKey of Object.keys (myObject)) {
+//     console.log(propKey)
+// }
+
+// for (const propValue of Object.values(myObject)) {
+//     console.log(propValue)
+// }
+
+// for (const [propKey, propValue] of Object.entries(myObject)) {
+//     console.log(`${propKey} : ${propValue}`)
+// }
+
+// forEach()
+
+// const myArray = [true, false];
+
+// myArray.forEach((myElement, i, originalArray) => {
+//     console.log(i, myElement, originalArray);
+// })
+
+// const array = [1, 2,3, 4];
+// const name = ["bikund", "tushar", "asanshay", 1, 2, "Noida"]
+// name.forEach((value, index) => {
+//     console.log(value, index)
+// })
+
+// const myMap = new Map([
+//     ['myKey', true],
+//     ['mySecondKey', false],
+// ]);
+
+// myMap.forEach((myValue, myKey, originalMap) => {
+//     console.log(`${myValue}, ${myKey}, ${originalMap}`)
+// })
+
+// const mySet = new Set([true, false]);
+// mySet.forEach((myValue, myKey, originalSet) => {
+//     console.log(myValue, myKey, originalSet)
+// })
+
+// Iterators
+
+// const myIterable = [1, 2, 3];
+// const myIterator = myIterable[ Symbol.iterator]();
+// console.log(myIterable);
+// console.log(myIterator)
+
+// const myIterator = myIterable[Symbol.iterator]();
+
+// console.log(myIterator.next());
+// console.log(myIterator.next())
+// console.log(myIterator.next())
+// console.log(myIterator.next())
+
+// Generator Functions
+
+// function* myGeneratorFunction() {
+//     console.log("Generator function body")
+// };
+// const myGeneratorObject = myGeneratorFunction();
+
+// console.log(myGeneratorObject)
+
+// function* myGeneratorFunction() {
+//     yield "My first yielded value.";
+//     yield "My second yielded value.";
+// }
+// const myGeneratorObject = myGeneratorFunction();
+// console.log(myGeneratorObject.next());
+// console.log(myGeneratorObject.next());
+
+// function* myGeneratorFunction() {
+//     yield "First";
+//     yield  "Second";
+// };
+
+// console.log(myGeneratorFunction().next());
+// console.log(myGeneratorFunction().next());
+
+// function* myGeneratorFunction() {
+//     yield 1;
+//     yield 2;
+//     return 3;
+// }
+
+// const myGeneratorObject = myGeneratorFunction();
+
+// console.log(myGeneratorObject.next());
+// console.log(myGeneratorObject.next());
+// console.log(myGeneratorObject.next());
+
+function* mySecondaryGenerator() {
+  yield 2;
+  yield 3;
+}
+
+function* myGenerator() {
+  yield 1;
+  yield* mySecondaryGenerator();
+  yield 4;
+  return 5;
+}
+
+const myIterator = myGenerator();
+
+console.log(myIterator.next());
+console.log(myIterator.next());
+console.log(myIterator.next());
+console.log(myIterator.next());
+console.log(myIterator.next());
+console.log(myIterator.next());
