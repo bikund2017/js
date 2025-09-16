@@ -35,13 +35,52 @@
 
 // console.log(myFunction());
 
+// function myParentFunction() {
+//     this.myProperty = true;
+//     let myFunction = () => {
+//         console.log( this );
+//     }
+//     myFunction();
+// };
 
-function myParentFunction() {
-    this.myProperty = true;
-    let myFunction = () => {
-        console.log( this );
-    }
-    myFunction();
-};
+// let myInstance = new myParentFunction();
 
-let myInstance = new myParentFunction();
+// Call arrow functions
+
+// function myFunction() {
+//     let myArrowFunction = () => {
+//         console.log( arguments[0]);
+//     }
+//     myArrowFunction(true);
+// }
+
+// myFunction(false);
+
+// let myArrowFunction = () => {
+//   console.log(arguments);
+// };
+// myArrowFunction(true);
+
+// Immediately Invoked Function Expressions (IIFE)
+
+// (function () {
+//   console.log("IIFE.");
+// })();
+
+// (function () {
+//   console.log("IIFE.");
+// })();
+
+// ( () => {
+//     console.log( "IIFE." );
+// }() );  ERROR
+
+// ( () => {
+//     console.log("IIFE");
+// })();
+
+
+
+
+
+
