@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typed Arrays - Binary Data in the Browser</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            color: #3498db;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        
+        .demo-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        .output {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            white-space: pre-wrap;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            transition: transform 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .type-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .type-table th, .type-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .type-table th {
+            background: #3498db;
+            color: white;
+        }
+        
+        .type-table tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+        
+        .visual-demo {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .memory-block {
+            padding: 10px;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            background: #ecf0f1;
+            font-family: monospace;
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        canvas {
+            border: 2px solid #3498db;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔢 Typed Arrays - Binary Data in the Browser</h1>
+        
+        <h2>📋 Available Typed Array Types</h2>
+        <table class="type-table">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Size (bytes)</th>
+                    <th>Range</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Int8Array</td><td>1</td><td>-128 to 127</td><td>Signed 8-bit integer</td></tr>
+                <tr><td>Uint8Array</td><td>1</td><td>0 to 255</td><td>Unsigned 8-bit integer</td></tr>
+                <tr><td>Uint8ClampedArray</td><td>1</td><td>0 to 255 (clamped)</td><td>Clamped 8-bit integer</td></tr>
+                <tr><td>Int16Array</td><td>2</td><td>-32,768 to 32,767</td><td>Signed 16-bit integer</td></tr>
+                <tr><td>Uint16Array</td><td>2</td><td>0 to 65,535</td><td>Unsigned 16-bit integer</td></tr>
+                <tr><td>Int32Array</td><td>4</td><td>-2³¹ to 2³¹-1</td><td>Signed 32-bit integer</td></tr>
+                <tr><td>Uint32Array</td><td>4</td><td>0 to 2³²-1</td><td>Unsigned 32-bit integer</td></tr>
+                <tr><td>Float32Array</td><td>4</td><td>IEEE 754</td><td>32-bit floating point</td></tr>
+                <tr><td>Float64Array</td><td>8</td><td>IEEE 754</td><td>64-bit floating point</td></tr>
+            </tbody>
+        </table>
+
+        <h2>🏗️ ArrayBuffer Foundation</h2>
+        <div class="demo-section">
+            <p>ArrayBuffer is the foundation - a fixed-size raw binary data buffer:</p>
+            <button onclick="demonstrateArrayBuffer()">Create ArrayBuffer</button>
+            <div id="arraybuffer-output" class="output"></div>
+        </div>
+
+        <h2>📊 Basic Typed Array Operations</h2>
+        <div class="demo-section">
+            <button onclick="demonstrateBasicOperations()">Basic Operations</button>
+            <div id="basic-output" class="output"></div>
+        </div>
+
+        <h2>🔄 Multiple Views on Same Buffer</h2>
+        <div class="demo-section">
+            <p>Multiple typed arrays can share the same underlying ArrayBuffer:</p>
+            <button onclick="demonstrateMultipleViews()">Multiple Views Demo</button>
+            <div id="views-output" class="output"></div>
+            <div id="memory-visual" class="visual-demo"></div>
+        </div>
+
+        <h2>🎨 Image Data Processing</h2>
+        <div class="demo-section">
+            <p>Typed arrays are perfect for image manipulation:</p>
+            <button onclick="createImageData()">Create & Manipulate Image</button>
+            <canvas id="image-canvas" width="200" height="200"></canvas>
+            <div id="image-output" class="output"></div>
+        </div>
+
+        <h2>🔊 Audio Data Processing</h2>
+        <div class="demo-section">
+            <p>Generate and process audio waveform data:</p>
+            <button onclick="generateAudioWaveform()">Generate Sine Wave</button>
+            <canvas id="audio-canvas" width="400" height="200"></canvas>
+            <div id="audio-output" class="output"></div>
+        </div>
+
+        <h2>📁 File Processing</h2>
+        <div class="demo-section">
+            <p>Read and process binary file data:</p>
+            <input type="file" id="file-input" accept="*/*">
+            <button onclick="processFile()">Process File</button>
+            <div id="file-output" class="output"></div>
+        </div>
+
+        <h2>🌐 Network Data Transfer</h2>
+        <div class="demo-section">
+            <p>Send binary data over the network:</p>
+            <button onclick="demonstrateNetworkTransfer()">Simulate Data Transfer</button>
+            <div id="network-output" class="output"></div>
+        </div>
+
+        <h2>⚡ Performance Comparison</h2>
+        <div class="demo-section">
+            <p>Compare performance between regular arrays and typed arrays:</p>
+            <button onclick="performanceTest()">Run Performance Test</button>
+            <div id="performance-output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        function log(elementId, message) {
+            document.getElementById(elementId).textContent += message + '\n';
+        }
+
+        function clear(elementId) {
+            document.getElementById(elementId).textContent = '';
+        }
+
+        function demonstrateArrayBuffer() {
+            clear('arraybuffer-output');
+            
+            // Create a 16-byte buffer
+            const buffer = new ArrayBuffer(16);
+            log('arraybuffer-output', `Created ArrayBuffer: ${buffer.byteLength} bytes`);
+            
+            // Create different views
+            const int32View = new Int32Array(buffer);
+            const uint8View = new Uint8Array(buffer);
+            
+            log('arraybuffer-output', `Int32Array length: ${int32View.length} (${int32View.length * 4} bytes)`);
+            log('arraybuffer-output', `Uint8Array length: ${uint8View.length} (${uint8View.length * 1} bytes)`);
+            
+            // Fill with data
+            int32View[0] = 0x12345678;
+            log('arraybuffer-output', `Set int32View[0] = 0x12345678`);
+            log('arraybuffer-output', `uint8View content: [${Array.from(uint8View.slice(0, 4)).map(x => '0x' + x.toString(16).padStart(2, '0')).join(', ')}]`);
+        }
+
+        function demonstrateBasicOperations() {
+            clear('basic-output');
+            
+            // Create arrays in different ways
+            const arr1 = new Uint8Array(8); // Length 8, filled with zeros
+            const arr2 = new Uint8Array([1, 2, 3, 4, 5]); // From regular array
+            const arr3 = new Float32Array([3.14, 2.71, 1.41, 1.73]);
+            
+            log('basic-output', 'Created arrays:');
+            log('basic-output', `Uint8Array(8): [${Array.from(arr1).join(', ')}]`);
+            log('basic-output', `Uint8Array([1,2,3,4,5]): [${Array.from(arr2).join(', ')}]`);
+            log('basic-output', `Float32Array: [${Array.from(arr3).join(', ')}]`);
+            
+            // Array methods work similarly
+            arr1.fill(42);
+            log('basic-output', `After fill(42): [${Array.from(arr1).join(', ')}]`);
+            
+            const doubled = arr2.map(x => x * 2);
+            log('basic-output', `Mapped *2: [${Array.from(doubled).join(', ')}]`);
+            
+            const sum = arr2.reduce((a, b) => a + b, 0);
+            log('basic-output', `Sum: ${sum}`);
+            
+            // Properties
+            log('basic-output', `\nProperties:`);
+            log('basic-output', `arr2.length: ${arr2.length}`);
+            log('basic-output', `arr2.byteLength: ${arr2.byteLength}`);
+            log('basic-output', `arr2.BYTES_PER_ELEMENT: ${arr2.BYTES_PER_ELEMENT}`);
+        }
+
+        function demonstrateMultipleViews() {
+            clear('views-output');
+            clear('memory-visual');
+            
+            const buffer = new ArrayBuffer(16);
+            const int32View = new Int32Array(buffer);
+            const uint16View = new Uint16Array(buffer);
+            const uint8View = new Uint8Array(buffer);
+            
+            // Set some data in int32 view
+            int32View[0] = 0x12345678;
+            int32View[1] = 0xABCDEF00;
+            
+            log('views-output', 'Set data via Int32Array:');
+            log('views-output', `int32View: [${Array.from(int32View).map(x => '0x' + x.toString(16).toUpperCase()).join(', ')}]`);
+            
+            log('views-output', '\nSame data viewed as Uint16Array:');
+            log('views-output', `uint16View: [${Array.from(uint16View).map(x => '0x' + x.toString(16).toUpperCase()).join(', ')}]`);
+            
+            log('views-output', '\nSame data viewed as Uint8Array:');
+            log('views-output', `uint8View: [${Array.from(uint8View).map(x => '0x' + x.toString(16).toUpperCase()).join(', ')}]`);
+            
+            // Visual representation
+            const visual = document.getElementById('memory-visual');
+            for (let i = 0; i < 8; i++) {
+                const block = document.createElement('div');
+                block.className = 'memory-block';
+                block.textContent = '0x' + uint16View[i].toString(16).toUpperCase().padStart(4, '0');
+                visual.appendChild(block);
+            }
+        }
+
+        function createImageData() {
+            clear('image-output');
+            
+            const canvas = document.getElementById('image-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Create image data
+            const imageData = ctx.createImageData(200, 200);
+            const data = imageData.data; // This is a Uint8ClampedArray
+            
+            log('image-output', `ImageData.data is: ${data.constructor.name}`);
+            log('image-output', `Size: ${data.length} bytes (${data.length/4} pixels)`);
+            
+            // Generate a gradient pattern
+            for (let y = 0; y < 200; y++) {
+                for (let x = 0; x < 200; x++) {
+                    const index = (y * 200 + x) * 4;
+                    data[index] = x;           // Red
+                    data[index + 1] = y;       // Green  
+                    data[index + 2] = (x + y) / 2; // Blue
+                    data[index + 3] = 255;     // Alpha
+                }
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+            log('image-output', 'Generated 200x200 gradient using Uint8ClampedArray');
+            
+            // Show some pixel data
+            log('image-output', `First pixel RGBA: [${data[0]}, ${data[1]}, ${data[2]}, ${data[3]}]`);
+            log('image-output', `Center pixel RGBA: [${data[40000]}, ${data[40001]}, ${data[40002]}, ${data[40003]}]`);
+        }
+
+        function generateAudioWaveform() {
+            clear('audio-output');
+            
+            const canvas = document.getElementById('audio-canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, 400, 200);
+            
+            // Generate 1 second of 440Hz sine wave at 44.1kHz
+            const sampleRate = 44100;
+            const frequency = 440; // A4 note
+            const duration = 1;
+            const samples = sampleRate * duration;
+            
+            const audioData = new Float32Array(samples);
+            
+            for (let i = 0; i < samples; i++) {
+                const time = i / sampleRate;
+                audioData[i] = Math.sin(2 * Math.PI * frequency * time);
+            }
+            
+            log('audio-output', `Generated ${samples} audio samples`);
+            log('audio-output', `Sample rate: ${sampleRate}Hz, Frequency: ${frequency}Hz`);
+            log('audio-output', `Data type: ${audioData.constructor.name}`);
+            log('audio-output', `Size: ${audioData.byteLength} bytes`);
+            
+            // Visualize the first 400 samples
+            ctx.strokeStyle = '#3498db';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            
+            for (let i = 0; i < 400; i++) {
+                const x = i;
+                const y = 100 + audioData[i] * 80;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            
+            ctx.stroke();
+            log('audio-output', 'Visualized first 400 samples on canvas');
+        }
+
+        function processFile() {
+            clear('file-output');
+            
+            const fileInput = document.getElementById('file-input');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                log('file-output', 'Please select a file first');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const arrayBuffer = e.target.result;
+                const uint8View = new Uint8Array(arrayBuffer);
+                
+                log('file-output', `File: ${file.name}`);
+                log('file-output', `Size: ${arrayBuffer.byteLength} bytes`);
+                log('file-output', `Type: ${file.type || 'unknown'}`);
+                
+                // Show file signature (first 16 bytes)
+                const signature = Array.from(uint8View.slice(0, Math.min(16, uint8View.length)))
+                    .map(byte => '0x' + byte.toString(16).padStart(2, '0'))
+                    .join(' ');
+                log('file-output', `Signature: ${signature}`);
+                
+                // Try to detect file type from signature
+                if (uint8View[0] === 0xFF && uint8View[1] === 0xD8) {
+                    log('file-output', 'Detected: JPEG image');
+                } else if (uint8View[0] === 0x89 && uint8View[1] === 0x50) {
+                    log('file-output', 'Detected: PNG image');
+                } else if (uint8View[0] === 0x50 && uint8View[1] === 0x4B) {
+                    log('file-output', 'Detected: ZIP archive');
+                } else if (uint8View[0] === 0x25 && uint8View[1] === 0x50) {
+                    log('file-output', 'Detected: PDF document');
+                }
+            };
+            
+            reader.readAsArrayBuffer(file);
+        }
+
+        function demonstrateNetworkTransfer() {
+            clear('network-output');
+            
+            // Simulate preparing binary data for network transfer
+            const data = new Float32Array([1.1, 2.2, 3.3, 4.4, 5.5]);
+            log('network-output', 'Original Float32Array:');
+            log('network-output', `Data: [${Array.from(data).join(', ')}]`);
+            log('network-output', `Size: ${data.byteLength} bytes`);
+            
+            // Convert to transferable format
+            const buffer = data.buffer.slice();
+            const transferableView = new Uint8Array(buffer);
+            
+            log('network-output', '\nAs bytes for network transfer:');
+            log('network-output', `Bytes: [${Array.from(transferableView).join(', ')}]`);
+            
+            // Simulate receiving and reconstructing
+            const receivedBuffer = transferableView.buffer;
+            const reconstructed = new Float32Array(receivedBuffer);
+            
+            log('network-output', '\nReconstructed at destination:');
+            log('network-output', `Data: [${Array.from(reconstructed).join(', ')}]`);
+            log('network-output', 'Data integrity preserved!');
+        }
+
+        function performanceTest() {
+            clear('performance-output');
+            
+            const size = 1000000;
+            log('performance-output', `Performance test with ${size} elements:`);
+            
+            // Regular Array test
+            console.time('Regular Array');
+            const regularArray = new Array(size);
+            for (let i = 0; i < size; i++) {
+                regularArray[i] = Math.random();
+            }
+            let sum1 = 0;
+            for (let i = 0; i < size; i++) {
+                sum1 += regularArray[i];
+            }
+            console.timeEnd('Regular Array');
+            const regularTime = performance.now();
+            
+            // Typed Array test  
+            console.time('Float32Array');
+            const typedArray = new Float32Array(size);
+            for (let i = 0; i < size; i++) {
+                typedArray[i] = Math.random();
+            }
+            let sum2 = 0;
+            for (let i = 0; i < size; i++) {
+                sum2 += typedArray[i];
+            }
+            console.timeEnd('Float32Array');
+            
+            log('performance-output', `Regular Array sum: ${sum1.toFixed(2)}`);
+            log('performance-output', `Float32Array sum: ${sum2.toFixed(2)}`);
+            log('performance-output', `Memory usage:`);
+            log('performance-output', `  Regular Array: ~${size * 8} bytes (approximate)`);
+            log('performance-output', `  Float32Array: ${typedArray.byteLength} bytes (exact)`);
+            log('performance-output', '\nTyped arrays provide:');
+            log('performance-output', '• Predictable memory layout');
+            log('performance-output', '• Better cache performance');
+            log('performance-output', '• Exact memory usage');
+            log('performance-output', '• Direct binary data access');
+        }
+    </script>
+</body>
+</html>
