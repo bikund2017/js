@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StopWatch</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #212121;
+      }
+      #myH1 {
+        font-size: 4rem;
+        font-family: "Arial", sans-serif;
+        color: #ffffff;
+      }
+      #container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 5px solid;
+        padding: 30px;
+        border-radius: 50px;
+        background-color: #ffffff;
+      }
+      #display {
+        font-size: 5rem;
+        font-family: monospace;
+        font-weight: bold;
+        color: hsl(0, 0%, 30%);
+        text-shadow: 2px 2px 2px hsla(0, 0%, 0%, 0.75);
+        margin-bottom: 25px;
+      }
+
+      #controls button {
+        font-size: 1.5rem;
+        font-weight: bold;
+        padding: 10px 20px;
+        margin: 5px;
+        min-width: 125px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        color: #ffffff;
+        transition: background-color 0.5s ease;
+      }
+
+      #startBtn {
+        background-color: hsl(115, 100%, 40%);
+      }
+      #startBtn:hover {
+        background-color: hsl(115, 100%, 30%);
+      }
+      #stopBtn {
+        background-color: hsl(0, 100%, 51%);
+      }
+      #stopBtn:hover {
+        background-color: hsla(0, 100%, 50%, 0.815);
+      }
+      #resetBtn {
+        background-color: hsl(178, 100%, 50%);
+      }
+      #resetBtn:hover {
+        background-color: hsla(157, 100%, 50%, 0.791);
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="myH1">Stopwatch</h1>
+
+    <div id="container">
+      <div id="display">00:00:00</div>
+    </div>
+    <div id="controls">
+      <button id="startBtn">Start</button>
+      <button id="stopBtn">Stop</button>
+      <button id="resetBtn">Reset</button>
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>
