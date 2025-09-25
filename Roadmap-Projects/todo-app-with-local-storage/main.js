@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     } catch (error) {
       console.error("Error loading tasks from localStorage:", error);
-      // If there's an error, start with empty task list
+      
     }
 
     updateClearAllButton();
