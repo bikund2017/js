@@ -75,13 +75,43 @@
 
 // Multiply-nested functions
 
-function A(x) {
-  function B(y) {
-    function C(z) {
-      console.log(x + y + z);
-    }
-    C(3);
+// function A(x) {
+//   function B(y) {
+//     function C(z) {
+//       console.log(x + y + z);
+//     }
+//     C(3);
+//   }
+//   B(2);
+// }
+// A(1); // Logs 6 (which is 1 + 2 + 3)
+
+
+
+// Name conflicts
+
+// function outside() {
+//   const x = 5;
+//   function inside(x) {
+//     return x * 2;
+//   }
+//   return inside;
+// }
+
+// console.log(outside()(10)); 
+
+
+// Using the arguments object
+
+function myConcat(separator) {
+  let result = "";
+
+  for (let i = 0; i < arguments.length; i++) {
+    result += arguments[i] + separator;
   }
-  B(2);
+  return result;
 }
-A(1); // Logs 6 (which is 1 + 2 + 3)
+console.log(myConcat(", ", "red", "orange", "blue"));
+
+console.log(myConcat(" ", "bikund", "is", "a", "good", "boy"));
+
