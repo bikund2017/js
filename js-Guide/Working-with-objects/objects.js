@@ -220,8 +220,6 @@ function objectComparisonExamples() {
 // =====================================
 
 function main() {
-
-
   objectCreationExamples();
   propertyAccessExamples();
   propertyEnumerationExamples();
@@ -229,8 +227,6 @@ function main() {
   gettersAndSettersExamples();
   deletingPropertiesExamples();
   objectComparisonExamples();
-
-
 }
 
 // Run all examples
