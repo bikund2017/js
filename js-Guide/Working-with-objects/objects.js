@@ -1,8 +1,3 @@
-/**
- * @file This file provides a structured guide to working with JavaScript objects.
- * It covers object creation, properties, methods, and other core concepts.
- */
-
 // =====================================
 // SECTION 1: Object Creation
 // =====================================
