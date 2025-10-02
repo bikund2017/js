@@ -1,4 +1,4 @@
-# My JavaScript Learning Journey
+# JavaScript concepts 
 
 This repository serves as a collection of my work while learning JavaScript. It includes everything from basic syntax and data structures to more advanced topics like asynchronous operations, DOM manipulation, and object-oriented programming.
 
